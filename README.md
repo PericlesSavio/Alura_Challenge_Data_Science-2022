@@ -1,26 +1,231 @@
-## Challenge de Data Science (2022)
-Somos uma equipe de dados que foi contratada para fazer parte do banco digital internacional chamado Alura Cash. No primeiro dia, a diretoria financeira nos convocou para uma reunião para informar que, recorrentemente, estão surgindo pessoas inadimplentes após a liberação de créditos.
+## Desafio Alura
 
-Por conta disso, foi solicitada uma solução para diminuir as perdas financeiras geradas por pessoas mutuárias que não quitam suas dívidas. Nos foi informado também que teríamos o prazo de um mês para encontrar essa solução e apresentá-la à diretoria financeira. Sendo assim, solicitamos um conjunto de dados contendo as informações de clientes, da solicitação de empréstimo, do histórico de crédito, bem como se a pessoa mutuária é inadimplente ou não.
+Você foi contratado(a) como pessoa cientista de dados para trabalhar em um banco digital internacional chamado Alura Cash. Na primeira reunião do seu novo trabalho, a diretoria financeira informa que, recorrentemente, estão surgindo pessoas inadimplentes após a liberação de créditos. Portanto, é solicitada uma solução para que seja possível diminuir as perdas financeiras por conta de pessoas mutuarias que não quitam suas dívidas.
 
-## Semana 1
-A semana 1 é dedicada à análise e estruturação dos dados oferecidos pelo banco com MySQL. Primeiro, foi notado que os dados estavam diferentes dos usuais, pois sua fonte era um dump, o que nos exigiu uma atenção especial na manipulação deles. Assim, buscamos ler todo o registro para entender nossos dados. Notamos que os valores estavam divididos por tabelas características, com valores de ID referenciando os dados de cada cliente.
+Como cientista de dados, você sugere um estudo das informações financeiras e de solicitação de empréstimo para encontrar padrões que possam indicar uma possível inadimplência.
 
-Então, iniciamos analisando as informações que o conjunto de dados possuía. Observamos que os dados estavam em inglês, os valores de texto estavam sem padronização, além de vários valores nulos.
+Desse modo, você solicita um conjunto de dados que contenha as informações de clientes, da solicitação de empréstimo, do histórico de crédito, bem como se a pessoa mutuaria é inadimplente ou não. Com esses dados, você sabe que consegue modelar um classificador capaz de encontrar potenciais clientes inadimplentes e solucionar o problema do Alura Cash.
 
-Foi percebida também a existência de uma tabela que continha a relação de todos os IDs de uma mesma pessoa cliente do Alura Cash. Dessa forma, o primeiro passo foi tratar nossos dados para deixá-los padronizados no texto, bem como, corrigir inconsistências relacionadas ao tipo e estruturação deles.
+Por fim, você vai utilizar o GitHub e desenvolver um portfólio focado em Data Science, Data Analytics e Machine Learning.
 
-Depois buscamos unir as tabelas pelos valores de IDs que eram correspondentes entre si, deixando todos os dados em uma única tabela de dados de clientes. Após uma conversa entre a equipe, decidimos não eliminar os valores nulos dentro do banco de dados, pois poderiam conter informações de clientes que são importantes para o banco.
+Link do repositório: [https://github.com/Mirlaa/Challenge-Data-Science-1ed](https://github.com/Mirlaa/Challenge-Data-Science-1ed)
 
-A tabela de dados unidos foi exportada do MySQL como csv e será utilizada nas próximas semanas.
-
-### Atividades realizadas (Semana 1)
-- [X] Instalar MySQL Workbench e importar **database dump**.
-- [X] Analisar quais os tipos de dados.
-- [X] Verificar quais são as inconsistências nos dados.
-- [X] Entender quais informações o conjunto de dados possui.
-- [X] Verificar quais são as inconsistências nos dados.
+### Atividades (Semana 1)
+- [ ] Instalar MySQL Workbench e importar **database dump**.
+- [ ] Analisar quais os tipos de dados.
+- [ ] Entender quais informações o conjunto de dados possui.
+- [ ] Verificar quais são as inconsistências nos dados.
 - [ ] Corrigir as inconsistências nos dados.
 - [ ] Unir as tabelas de dados de acordo com os IDs.
-- [X] Traduzir as colunas.
+- [ ] Traduzir as colunas.
 - [ ] Exportar a tabela de dados unidos como csv.
+
+#### Instalar MySQL Workbench e importar **database dump**
+![](imagens/import_dump.png "Title")
+- [x] Instalar MySQL Workbench e importar **database dump**.
+
+#### Traduzir os dados
+
+Uma das atividade é traduzir os dados. Com auxílio do dicionário de dados **[https://github.com/Mirlaa/Challenge-Data-Science-1ed/tree/main/Dados](https://github.com/Mirlaa/Challenge-Data-Science-1ed/tree/main/Dados)** os dados foram traduzidos utilizando o código abaixo.
+
+    -- aluracash.dados_mutuarios
+
+    ALTER TABLE aluracash.dados_mutuarios
+    RENAME COLUMN person_id TO PESSOA,
+    RENAME COLUMN person_age TO IDADE,
+    RENAME COLUMN person_income TO RENDIMENTO_ANUAL,
+    RENAME COLUMN person_home_ownership TO SITUACAO_PROPRIEDADE,
+    RENAME COLUMN person_emp_length TO ANOS_TRABALHADOS;
+
+    ALTER TABLE aluracash.dados_mutuarios
+    MODIFY COLUMN SITUACAO_PROPRIEDADE VARCHAR(10); -- Error Code: 1406. Data too long for column 'SITUACAO_PROPRIEDADE' at row 4. A palavra 'Hipotecada' tem 10 caracteres.
+
+    SET SQL_SAFE_UPDATES = 0; -- Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column.  To disable safe mode, toggle the option in Preferences -> SQL Editor and reconnect.
+
+    UPDATE aluracash.dados_mutuarios
+    SET SITUACAO_PROPRIEDADE  =
+        CASE
+            WHEN SITUACAO_PROPRIEDADE = 'Rent' THEN 'Alugada'
+            WHEN SITUACAO_PROPRIEDADE = 'Own' THEN 'Própria'
+            WHEN SITUACAO_PROPRIEDADE = 'Mortgage' THEN 'Hipotecada'
+            WHEN SITUACAO_PROPRIEDADE = 'Other' THEN 'Outros'
+        END;
+
+
+    -- aluracash.emprestimos
+
+    ALTER TABLE aluracash.emprestimos
+    RENAME COLUMN loan_id TO EMPRESTIMO,
+    RENAME COLUMN loan_intent TO MOTIVO_EMPRESTIMO,
+    RENAME COLUMN loan_grade TO PONTUACAO,
+    RENAME COLUMN loan_amnt TO VALOR_EMPRESTIMO,
+    RENAME COLUMN loan_int_rate TO JUROS,
+    RENAME COLUMN loan_status TO POSSIB_INADIMPLENCIA,
+    RENAME COLUMN loan_percent_income TO EMPRESTIMO_PERC_RENDA_ANUAL;
+
+    ALTER TABLE aluracash.emprestimos
+    MODIFY COLUMN MOTIVO_EMPRESTIMO VARCHAR(20); -- Error Code: 1406.
+
+    UPDATE aluracash.emprestimos
+    SET MOTIVO_EMPRESTIMO  =
+    CASE
+        WHEN MOTIVO_EMPRESTIMO = 'Homeimprovement' THEN 'Melhora do lar'
+        WHEN MOTIVO_EMPRESTIMO = 'Venture'    THEN 'Empreendimento'
+        WHEN MOTIVO_EMPRESTIMO = 'Personal'THEN 'Pessoal'
+        WHEN MOTIVO_EMPRESTIMO = 'Medical'THEN 'Médico'
+        WHEN MOTIVO_EMPRESTIMO = 'Education'THEN'Educativo'
+        WHEN MOTIVO_EMPRESTIMO = 'Debtconsolidation'THEN 'Pagamento de débitos'
+    END;
+
+
+    -- aluracash.historicos_banco
+
+    ALTER TABLE aluracash.historicos_banco
+    RENAME COLUMN cb_id TO SOLICITACAO,
+    RENAME COLUMN cb_person_default_on_file TO INADIMPLENTE,
+    RENAME COLUMN cb_person_cred_hist_length TO ANOS_PRIMEIRO_CREDITO;
+
+    UPDATE aluracash.historicos_banco
+    SET INADIMPLENTE  =
+    CASE
+        WHEN INADIMPLENTE = 'N' THEN 0
+        WHEN INADIMPLENTE = 'Y' THEN 1
+    END;
+
+    ALTER TABLE aluracash.historicos_banco
+    MODIFY COLUMN INADIMPLENTE INT; -- Adequar o tipo do dado (de VARCHAR(1) para INT)
+- [x] Traduzir as colunas.
+
+#### Analisar quais os tipos de dados
+
+Executar uma liha de cada vez:
+
+    SHOW COLUMNS FROM id;
+    SHOW COLUMNS FROM dados_mutuarios;
+    SHOW COLUMNS FROM emprestimos;
+    SHOW COLUMNS FROM historicos_banco;
+
+As tabelas possuem dados do tipo **INT**, **FLOAT** e **VARCHAR**.
+- [x] Analisar quais os tipos de dados.
+
+#### Entender quais informações o conjunto de dados possui.
+
+As tabelas **dados_mutuarios**, **emprestimos**, **historicos_banco** possui dados acerca de perdas financeiras geradas por pessoas mutuárias que não quitam suas dívidas, além de informações pessoais como idade, situação da propriedade e outros.
+
+A tabela **id** possui IDs para relacionamento com outras tabelas.
+- [x] Entender quais informações o conjunto de dados possui.
+
+
+#### Verificar as inconsistências nos dados
+
+Para verificar valores vazio ou nulos:
+
+SELECT nome_coluna FROM nome_tabela
+WHERE nome_coluna IS NULL OR nome_coluna = ''
+
+Exemplo:
+
+    SELECT * FROM aluracash.emprestimos
+    WHERE JUROS IS NULL OR JUROS = ''
+
+A tabela **id** é única que não apresenta valores nulos, vazios nem duplicados.
+- [x] Verificar quais são as inconsistências nos dados.
+
+#### Unir as tabelas de dados de acordo com os IDs
+
+Para agilizar o processo, estas duas estapas foram feitas juntas.
+
+Para juntar as tabelas foi utilizado **INNER JOIN**, os dados das tabelas que não se ralacionam com a tabela **id** foram desconsiderados.
+
+    SELECT PESSOA, IDADE, RENDIMENTO_ANUAL, SITUACAO_PROPRIEDADE, ANOS_TRABALHADOS, EMPRESTIMO, MOTIVO_EMPRESTIMO, PONTUACAO, VALOR_EMPRESTIMO, JUROS, POSSIB_INADIMPLENCIA, EMPRESTIMO_PERC_RENDA_ANUAL, SOLICITACAO, INADIMPLENTE, ANOS_PRIMEIRO_CREDITO
+    FROM id
+    INNER JOIN dados_mutuarios
+    on id.person_id = dados_mutuarios.PESSOA
+    INNER JOIN emprestimos
+    on id.loan_id = emprestimos.EMPRESTIMO
+    INNER JOIN historicos_banco
+    on id.cb_id = historicos_banco.SOLICITACAO
+
+O resultado é uma tabela com 15 colunas e 14.952 linhas.
+- [x] Unir as tabelas de dados de acordo com os IDs.
+
+#### Corrigir as inconsistências nos dados
+
+Foram encontradas linhas com dados nulos ou vazios, essas linhas foram removidas.
+
+    SELECT PESSOA, IDADE, RENDIMENTO_ANUAL, SITUACAO_PROPRIEDADE, ANOS_TRABALHADOS, EMPRESTIMO, MOTIVO_EMPRESTIMO, PONTUACAO, VALOR_EMPRESTIMO, JUROS, POSSIB_INADIMPLENCIA, EMPRESTIMO_PERC_RENDA_ANUAL, SOLICITACAO, INADIMPLENTE, ANOS_PRIMEIRO_CREDITO
+    FROM id
+    INNER JOIN dados_mutuarios
+    on id.person_id = dados_mutuarios.PESSOA
+    INNER JOIN emprestimos
+    on id.loan_id = emprestimos.EMPRESTIMO
+    INNER JOIN historicos_banco
+    on id.cb_id = historicos_banco.SOLICITACAO
+    WHERE IDADE IS NOT NULL
+    AND RENDIMENTO_ANUAL IS NOT NULL
+    AND SITUACAO_PROPRIEDADE IS NOT NULL
+    AND ANOS_TRABALHADOS IS NOT NULL
+    AND MOTIVO_EMPRESTIMO IS NOT NULL
+    AND PONTUACAO != ''
+    AND VALOR_EMPRESTIMO IS NOT NULL
+    AND JUROS IS NOT NULL
+    AND POSSIB_INADIMPLENCIA IS NOT NULL
+    AND EMPRESTIMO_PERC_RENDA_ANUAL IS NOT NULL
+    AND INADIMPLENTE IS NOT NULL
+
+O resultado é uma tabela com 15 colunas e 12.420 linhas.
+- [x] Corrigir as inconsistências nos dados.
+
+
+#### Exportar a tabela de dados unidos como csv
+Para exportar foi utilizado o Python:
+
+    # bibliotecas usadas:
+    import mysql.connector as sql # fazer a conexão com o MySQL
+    import pandas as pd # manipulação dos dados
+
+    # opcional (ocutar alguns alertas)
+    import warnings
+    warnings.filterwarnings('ignore')
+
+    # conexão
+    db_connection = sql.connect(host='127.0.0.1', database='aluracash', user='root', password='senha123')
+
+    # testar conexao
+    pd.read_sql('SELECT * FROM id', con=db_connection)
+
+    # query unindo todas as tabelas
+    tabela_aluracash = pd.read_sql(
+    """SELECT PESSOA, IDADE, RENDIMENTO_ANUAL, SITUACAO_PROPRIEDADE, ANOS_TRABALHADOS, EMPRESTIMO, MOTIVO_EMPRESTIMO, PONTUACAO, VALOR_EMPRESTIMO, JUROS, POSSIB_INADIMPLENCIA, EMPRESTIMO_PERC_RENDA_ANUAL, SOLICITACAO, INADIMPLENTE, ANOS_PRIMEIRO_CREDITO
+    FROM id
+    INNER JOIN dados_mutuarios
+    on id.person_id = dados_mutuarios.PESSOA
+    INNER JOIN emprestimos
+    on id.loan_id = emprestimos.EMPRESTIMO
+    INNER JOIN historicos_banco
+    on id.cb_id = historicos_banco.SOLICITACAO
+    WHERE IDADE IS NOT NULL
+    AND RENDIMENTO_ANUAL IS NOT NULL
+    AND SITUACAO_PROPRIEDADE IS NOT NULL
+    AND ANOS_TRABALHADOS IS NOT NULL
+    AND MOTIVO_EMPRESTIMO IS NOT NULL
+    AND PONTUACAO != ''
+    AND VALOR_EMPRESTIMO IS NOT NULL
+    AND JUROS IS NOT NULL
+    AND POSSIB_INADIMPLENCIA IS NOT NULL
+    AND EMPRESTIMO_PERC_RENDA_ANUAL IS NOT NULL
+    AND INADIMPLENTE IS NOT NULL""", con=db_connection)
+
+    # exportar para formato CSV
+    tabela_aluracash.to_csv(('tabela_aluracash.csv'), sep=';', index=False)
+- [x] Exportar a tabela de dados unidos como csv.
+
+### Atividades (Semana 1)
+- [x] Instalar MySQL Workbench e importar **database dump**.
+- [x] Analisar quais os tipos de dados.
+- [x] Entender quais informações o conjunto de dados possui.
+- [x] Verificar quais são as inconsistências nos dados.
+- [x] Corrigir as inconsistências nos dados.
+- [x] Unir as tabelas de dados de acordo com os IDs.
+- [x] Traduzir as colunas.
+- [x] Exportar a tabela de dados unidos como csv.
