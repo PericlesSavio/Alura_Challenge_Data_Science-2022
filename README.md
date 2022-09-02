@@ -178,7 +178,8 @@ O resultado é uma tabela com 15 colunas e 12.420 linhas.
 
 
 #### Exportar a tabela de dados unidos como csv
-Para exportar foi utilizado o Python:
+Para exportar foi utilizado o Python.
+Link do Jupyter Notebook: [https://github.com/PericlesSavio/Alura_Challenge_Data_Science-2022/blob/master/semana_1.ipynb](https://github.com/PericlesSavio/Alura_Challenge_Data_Science-2022/blob/master/semana_1.ipynb)
 
     # bibliotecas usadas:
     import mysql.connector as sql # fazer a conexão com o MySQL
