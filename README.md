@@ -151,7 +151,7 @@ O resultado é uma tabela com 15 colunas e 14.952 linhas.
 
 #### Corrigir as inconsistências nos dados
 
-Foram encontradas linhas com dados nulos ou vazios, essas linhas foram removidas.
+Foram encontradas linhas com o id **PESSOA** vazios, essas linhas foram removidas.
 
     SELECT PESSOA, IDADE, RENDIMENTO_ANUAL, SITUACAO_PROPRIEDADE, ANOS_TRABALHADOS, EMPRESTIMO, MOTIVO_EMPRESTIMO, PONTUACAO, VALOR_EMPRESTIMO, JUROS, POSSIB_INADIMPLENCIA, EMPRESTIMO_PERC_RENDA_ANUAL, SOLICITACAO, INADIMPLENTE, ANOS_PRIMEIRO_CREDITO
     FROM id
@@ -161,19 +161,9 @@ Foram encontradas linhas com dados nulos ou vazios, essas linhas foram removidas
     on id.loan_id = emprestimos.EMPRESTIMO
     INNER JOIN historicos_banco
     on id.cb_id = historicos_banco.SOLICITACAO
-    WHERE IDADE IS NOT NULL
-    AND RENDIMENTO_ANUAL IS NOT NULL
-    AND SITUACAO_PROPRIEDADE IS NOT NULL
-    AND ANOS_TRABALHADOS IS NOT NULL
-    AND MOTIVO_EMPRESTIMO IS NOT NULL
-    AND PONTUACAO != ''
-    AND VALOR_EMPRESTIMO IS NOT NULL
-    AND JUROS IS NOT NULL
-    AND POSSIB_INADIMPLENCIA IS NOT NULL
-    AND EMPRESTIMO_PERC_RENDA_ANUAL IS NOT NULL
-    AND INADIMPLENTE IS NOT NULL
+    AND PESSOA != ''
 
-O resultado é uma tabela com 15 colunas e 12.420 linhas.
+O resultado é uma tabela com 15 colunas e 34.485 linhas.
 - [x] Corrigir as inconsistências nos dados.
 
 
@@ -205,17 +195,7 @@ Link do Jupyter Notebook: [https://github.com/PericlesSavio/Alura_Challenge_Data
     on id.loan_id = emprestimos.EMPRESTIMO
     INNER JOIN historicos_banco
     on id.cb_id = historicos_banco.SOLICITACAO
-    WHERE IDADE IS NOT NULL
-    AND RENDIMENTO_ANUAL IS NOT NULL
-    AND SITUACAO_PROPRIEDADE IS NOT NULL
-    AND ANOS_TRABALHADOS IS NOT NULL
-    AND MOTIVO_EMPRESTIMO IS NOT NULL
-    AND PONTUACAO != ''
-    AND VALOR_EMPRESTIMO IS NOT NULL
-    AND JUROS IS NOT NULL
-    AND POSSIB_INADIMPLENCIA IS NOT NULL
-    AND EMPRESTIMO_PERC_RENDA_ANUAL IS NOT NULL
-    AND INADIMPLENTE IS NOT NULL""", con=db_connection)
+    AND PESSOA != ''""", con=db_connection)
 
     # exportar para formato CSV
     tabela_aluracash.to_csv(('tabela_aluracash.csv'), sep=';', index=False)
