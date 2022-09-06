@@ -169,7 +169,7 @@ O resultado é uma tabela com 15 colunas e 34.485 linhas.
 
 #### Exportar a tabela de dados unidos como csv
 Para exportar foi utilizado o Python.
-Link do Jupyter Notebook: [https://github.com/PericlesSavio/Alura_Challenge_Data_Science-2022/blob/master/semana_1.ipynb](https://github.com/PericlesSavio/Alura_Challenge_Data_Science-2022/blob/master/semana_1.ipynb)
+Link do Jupyter Notebook: [semana_1.ipynb](https://github.com/PericlesSavio/Alura_Challenge_Data_Science-2022/blob/master/semana_1.ipynb)
 
     # bibliotecas usadas:
     import mysql.connector as sql # fazer a conexão com o MySQL
@@ -210,3 +210,17 @@ Link do Jupyter Notebook: [https://github.com/PericlesSavio/Alura_Challenge_Data
 - [x] Unir as tabelas de dados de acordo com os IDs.
 - [x] Traduzir as colunas.
 - [x] Exportar a tabela de dados unidos como csv.
+
+### Atividades (Semana 2)
+- [ ] Remoção de dados nulos.
+- [ ] Tratamento de outliers.
+- [ ] Analisar a correlação das variáveis.
+- [ ] Aplicar encoding nas variáveis categóricas.
+- [ ] Normalização das variáveis.
+- [ ] Balanceamento na variável alvo.
+- [ ] Avaliação dos modelos.
+- [ ] Otimização de hiperparâmetros.
+- [ ] Exportação do modelo.
+
+### Notebook (Semana 2):
+[semana_2.ipynb](https://github.com/PericlesSavio/Alura_Challenge_Data_Science-2022/blob/master/semana_2.ipynb)
