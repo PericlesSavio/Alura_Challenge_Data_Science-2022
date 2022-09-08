@@ -212,7 +212,7 @@ Link do Jupyter Notebook: [semana_1.ipynb](https://github.com/PericlesSavio/Alur
 - [x] Exportar a tabela de dados unidos como csv.
 
 ### Atividades (Semana 2)
-- [ ] Remoção de dados nulos.
+- [X] Remoção de dados nulos.
 - [ ] Tratamento de outliers.
 - [ ] Analisar a correlação das variáveis.
 - [ ] Aplicar encoding nas variáveis categóricas.
