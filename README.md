@@ -213,7 +213,7 @@ Link do Jupyter Notebook: [semana_1.ipynb](https://github.com/PericlesSavio/Alur
 
 ### Atividades (Semana 2)
 - [X] Remoção de dados nulos.
-- [ ] Tratamento de outliers.
+- [X] Tratamento de outliers.
 - [ ] Analisar a correlação das variáveis.
 - [ ] Aplicar encoding nas variáveis categóricas.
 - [ ] Normalização das variáveis.
