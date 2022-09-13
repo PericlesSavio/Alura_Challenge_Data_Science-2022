@@ -218,7 +218,7 @@ Link do Jupyter Notebook: [semana_1.ipynb](https://github.com/PericlesSavio/Alur
 - [X] Aplicar encoding nas variáveis categóricas.
 - [X] Normalização das variáveis.
 - [X] Balanceamento na variável alvo.
-- [ ] Avaliação dos modelos.
+- [X] Avaliação dos modelos.
 - [ ] Otimização de hiperparâmetros.
 - [ ] Exportação do modelo.
 
