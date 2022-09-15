@@ -222,5 +222,6 @@ Link do Jupyter Notebook: [semana_1.ipynb](https://github.com/PericlesSavio/Alur
 - [ ] Otimização de hiperparâmetros.
 - [ ] Exportação do modelo.
 
-### Notebook (Semana 2):
-[semana_2.ipynb](https://github.com/PericlesSavio/Alura_Challenge_Data_Science-2022/blob/master/semana_2.ipynb)
+### Notebooks:
+[Semana 1](https://github.com/PericlesSavio/Alura_Challenge_Data_Science-2022/blob/master/semana_1.ipynb)
+[Semana 2](https://github.com/PericlesSavio/Alura_Challenge_Data_Science-2022/blob/master/semana_2.ipynb)
